@@ -1,0 +1,30 @@
+{
+  "name": "ncov-koa",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev:build": "tsc -w",
+    "dev:start": "nodemon node ./dist/app.js",
+    "dev": "concurrently yarn:dev:*"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "./src/*"
+    ]
+  },
+  "devDependencies": {
+    "@types/koa": "^2.11.0",
+    "@types/koa2-cors": "^2.0.1",
+    "@types/koa__router": "^8.0.2",
+    "concurrently": "^5.1.0",
+    "nodemon": "^2.0.2",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "@koa/router": "^8.0.6",
+    "axios": "^0.19.2",
+    "koa": "^2.11.0",
+    "koa2-cors": "^2.0.6"
+  }
+}
