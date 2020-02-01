@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const router_1 = __importDefault(require("@koa/router"));
-const area_1 = __importDefault(require("../../models/area"));
+const spider_1 = __importDefault(require("../spider/spider"));
 const router = new router_1.default();
 router.get('/area', async (ctx, next) => {
-    const res = await area_1.default.getList();
+    const res = await spider_1.default.spiderArea();
     ctx.body = res;
 });
 exports.default = router;

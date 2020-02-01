@@ -6,7 +6,8 @@
   "scripts": {
     "dev:build": "tsc -w",
     "dev:start": "nodemon node ./dist/app.js",
-    "dev": "concurrently yarn:dev:*"
+    "dev": "tsc && concurrently yarn:dev:*",
+    "build": "tsc"
   },
   "nodemonConfig": {
     "ignore": [

@@ -1,11 +1,11 @@
 import Router from '@koa/router';
-import Area from '../../models/area';
 import { Context, Next } from 'koa';
+import Spider from '../spider/spider';
 
 const router = new Router();
 
 router.get('/area', async (ctx: Context, next: Next) => {
-  const res = await Area.getList();
+  const res = await Spider.spiderArea();
   ctx.body = res;
 });
 
