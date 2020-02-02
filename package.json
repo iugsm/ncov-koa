@@ -18,6 +18,7 @@
     "@types/koa": "^2.11.0",
     "@types/koa2-cors": "^2.0.1",
     "@types/koa__router": "^8.0.2",
+    "@types/require-directory": "^2.1.1",
     "concurrently": "^5.1.0",
     "nodemon": "^2.0.2",
     "typescript": "^3.7.5"
@@ -26,6 +27,7 @@
     "@koa/router": "^8.0.6",
     "axios": "^0.19.2",
     "koa": "^2.11.0",
-    "koa2-cors": "^2.0.6"
+    "koa2-cors": "^2.0.6",
+    "require-directory": "^2.1.1"
   }
 }

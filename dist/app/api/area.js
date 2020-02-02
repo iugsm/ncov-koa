@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const router_1 = __importDefault(require("@koa/router"));
 const spider_1 = __importDefault(require("../spider/spider"));
 const router = new router_1.default();
-router.get('/area', async (ctx, next) => {
+router.get("/area", async (ctx, next) => {
     const res = await spider_1.default.spiderArea();
     ctx.body = res;
 });

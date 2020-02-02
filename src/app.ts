@@ -1,11 +1,9 @@
-import Koa from 'koa';
-import cors from 'koa2-cors';
-import router from './app/api/area';
-import dashboard from './app/api/dashboard';
+import Koa from "koa";
+import cors from "koa2-cors";
+import InitApp from "./core/init";
 
 const app = new Koa();
 app.use(cors());
-app.use(router.routes());
-app.use(dashboard.routes());
+InitApp.init(app);
 
 app.listen(9000);

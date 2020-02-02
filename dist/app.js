@@ -5,10 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const koa_1 = __importDefault(require("koa"));
 const koa2_cors_1 = __importDefault(require("koa2-cors"));
-const area_1 = __importDefault(require("./app/api/area"));
-const dashboard_1 = __importDefault(require("./app/api/dashboard"));
+const init_1 = __importDefault(require("./core/init"));
 const app = new koa_1.default();
 app.use(koa2_cors_1.default());
-app.use(area_1.default.routes());
-app.use(dashboard_1.default.routes());
+init_1.default.init(app);
 app.listen(9000);
