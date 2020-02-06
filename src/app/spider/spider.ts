@@ -1,63 +1,76 @@
-import Httper from "../../utils/http";
+import Httper from '../../utils/http';
+import setting from '../../config/setting';
+import fs from 'fs';
 
-interface SipderData {}
-
-enum Condition {
-  AREA,
-  DASH
+interface SipderData {
+  area: [];
+  dash: {};
 }
 
 class Spider {
-  private url: string = "https://ncov.dxy.cn/ncovh5/view/pneumonia";
-
-  constructor() {
-    this.getRawHtml();
-  }
+  private url: string = 'https://ncov.dxy.cn/ncovh5/view/pneumonia';
 
   private async getRawHtml() {
     const rawHtml = await Httper.get(this.url);
     return rawHtml;
   }
 
-  async spiderByCondition(condition: Condition) {
-    const rawHtml = await this.getRawHtml();
-
-    let data: SipderData = {};
-
-    switch (condition) {
-      case Condition.AREA:
-        data = await this.spiderArea(rawHtml);
-        break;
-      case Condition.DASH:
-        data = await this.sipderDash(rawHtml);
-        break;
-      default:
-    }
-
-    return data;
-  }
-
   private async spiderArea(rawHtml: string) {
     const reg = /window.getAreaStat = (.*?)\}catch/;
-    return this.analyz(rawHtml, reg);
-  }
+    let data = [];
 
-  private async sipderDash(rawHtml: string) {
-    const reg = /window.getStatisticsService = (.*?)\}catch/;
-    return this.analyz(rawHtml, reg);
-  }
+    const res = rawHtml.match(reg);
 
-  private analyz(source: string, reg: RegExp): SipderData {
-    const res = source.match(reg);
-
-    let data = {};
     if (res !== null) {
       data = JSON.parse(res[1]);
     }
     return data;
   }
+
+  private async sipderDash(rawHtml: string) {
+    const reg = /window.getStatisticsService = (.*?)\}catch/;
+    let data = {};
+
+    const res = rawHtml.match(reg);
+
+    if (res !== null) {
+      data = JSON.parse(res[1]);
+    }
+    return data;
+  }
+
+  intervalFunc() {
+    this.spiderData();
+
+    setInterval(() => {
+      this.spiderData();
+    }, setting.spiderTime);
+  }
+
+  private async spiderData() {
+    console.log('spider start');
+
+    const rawHtml = await this.getRawHtml();
+
+    const area = await this.spiderArea(rawHtml);
+    const dash = await this.sipderDash(rawHtml);
+
+    const data: SipderData = {
+      area,
+      dash
+    };
+    this.saveData(data);
+  }
+
+  private saveData(data: SipderData) {
+    const path = `${process.cwd()}/data/data.json`;
+
+    if (data.area.length > 0 && Object.keys(data.dash).length > 0) {
+      fs.writeFileSync(path, JSON.stringify(data));
+    }
+  }
 }
 
 const spider = new Spider();
 
-export { Condition, spider };
+export { spider };
